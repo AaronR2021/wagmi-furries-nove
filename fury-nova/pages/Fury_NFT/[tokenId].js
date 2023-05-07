@@ -26,7 +26,6 @@ function CharacterDetail() {
   //states
   const [furyInfo, setFuryInfo] = useState(JSON.parse(router.query.data));
   const [contractProvider, setContractProvider] = useState(null);
-  const [contractSigner, setContractSigner] = useState(null);
   const [open, setOpen] = useState(false);
 
   const [constPerMint, setCostPerMint] = useState(0);
@@ -46,7 +45,6 @@ function CharacterDetail() {
     },
   })
 
-
   const handleClick = () => {
     setOpen(true);
   };
@@ -54,9 +52,6 @@ function CharacterDetail() {
     router.replace('/home')
     setOpen(false);
   };
-
- 
-
   //authentication
   useEffect(() => {
     isauthenticate(isConnected, router);
@@ -94,14 +89,15 @@ function CharacterDetail() {
    }
 
    async function mintNFT() {
-   const data= await mintNovaFurries.writeAsync()
-   const {status} = await data.wait();
-    if(status==1){
-      handleClick()
-    }else{
+    const data= await mintNovaFurries.writeAsync()
+    const {status} = await data.wait();
+     if(status==1){
+       handleClick()
+     }else{
+ 
+     }
+   }
 
-    }
-  }
 
   const action = (
     <React.Fragment>
