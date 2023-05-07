@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import { useState,useEffect } from "react";
-import * as React from 'react';
+import { useState, useEffect } from "react";
+import * as React from "react";
 import styles from "../../components/NFTInfoCard.module.css";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,20 +8,22 @@ import TableContainer from "@mui/material/TableContainer";
 import { useAccount, useContractWrite } from "wagmi";
 import { getContract, getProvider } from "@wagmi/core";
 import { abi } from "../../abi";
-const { ethers } = require('ethers');
-import Snackbar from '@mui/material/Snackbar';
-import IconButton from '@mui/material/IconButton';
-import Button from '@mui/material/Button';
+const { ethers } = require("ethers");
+import Snackbar from "@mui/material/Snackbar";
+import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
 //to write on contract
 
-
-import {isauthenticate, StyledTableCell, StyledTableRow } from "../../utils/utils";
+import {
+  isauthenticate,
+  StyledTableCell,
+  StyledTableRow,
+} from "../../utils/utils";
 
 function CharacterDetail() {
   //routing
   const router = useRouter();
   const { address, isConnected } = useAccount();
-
 
   //states
   const [furyInfo, setFuryInfo] = useState(JSON.parse(router.query.data));
@@ -34,22 +36,22 @@ function CharacterDetail() {
 
   //write to contract
   const mintNovaFurries = useContractWrite({
-    mode: 'recklesslyUnprepared',
-    address: '0x72aB91aaf2530CD3060E44F687fAa3cF74CDe032',
+    mode: "recklesslyUnprepared",
+    address: "0x72aB91aaf2530CD3060E44F687fAa3cF74CDe032",
     abi: abi,
-    functionName: 'mint',
-    args:[furyInfo.id],
+    functionName: "mint",
+    args: [furyInfo.id],
     overrides: {
       from: address,
-      value: ethers.utils.parseEther(constPerMint),
+      value: ethers.utils.parseEther(constPerMint.toString()),
     },
-  })
+  });
 
   const handleClick = () => {
     setOpen(true);
   };
   const handleClose = () => {
-    router.replace('/home')
+    router.replace("/home");
     setOpen(false);
   };
   //authentication
@@ -68,36 +70,32 @@ function CharacterDetail() {
     setContractProvider(contract);
   }, []);
 
-
   useEffect(() => {
     if (contractProvider) {
       Promise.all([getSingleNFTMetadataInfomation()]);
     }
   }, [contractProvider]);
 
+  //functions
+  async function getSingleNFTMetadataInfomation() {
+    if (contractProvider) {
+      const supply = await contractProvider.supply(furyInfo.id);
+      setTotalSupply(supply.toNumber());
+      const minted = await contractProvider.minted(furyInfo.id);
+      setTotalMinted(minted.toNumber());
+      const cost = await contractProvider.costPerNft(furyInfo.id);
+      setCostPerMint(ethers.utils.formatUnits(cost, "ether"));
+    }
+  }
 
-    //functions
-    async function getSingleNFTMetadataInfomation() {
-      if (contractProvider) {
-        const supply = await contractProvider.supply(furyInfo.id)
-        setTotalSupply(supply.toNumber())
-        const minted = await contractProvider.minted(furyInfo.id)
-        setTotalMinted(minted.toNumber())
-        const cost = await contractProvider.costPerNft(furyInfo.id)
-        setCostPerMint(ethers.utils.formatUnits(cost, 'ether'))
-     } 
-   }
-
-   async function mintNFT() {
-    const data= await mintNovaFurries.writeAsync()
-    const {status} = await data.wait();
-     if(status==1){
-       handleClick()
-     }else{
- 
-     }
-   }
-
+  async function mintNFT() {
+    const data = await mintNovaFurries.writeAsync();
+    const { status } = await data.wait();
+    if (status == 1) {
+      handleClick();
+    } else {
+    }
+  }
 
   const action = (
     <React.Fragment>
@@ -109,12 +107,9 @@ function CharacterDetail() {
         aria-label="close"
         color="inherit"
         onClick={handleClose}
-      >
-      </IconButton>
+      ></IconButton>
     </React.Fragment>
   );
-
-
 
   if (furyInfo) {
     return (
@@ -159,16 +154,18 @@ function CharacterDetail() {
             </TableContainer>
           </div>
           <div className={styles.buttonToMint}>
-          <Button variant="contained" color="success" onClick={mintNFT}>Mint {furyInfo.name}</Button>
+            <Button variant="contained" color="success" onClick={mintNFT}>
+              Mint {furyInfo.name}
+            </Button>
           </div>
         </div>
         <Snackbar
-  open={open}
-  autoHideDuration={6000}
-  onClose={handleClose}
-  message="You've minted your NFT"
-  action={action}
-/>
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          message="You've minted your NFT"
+          action={action}
+        />
       </div>
     );
   } else {
