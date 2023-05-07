@@ -1,0 +1,82 @@
+.cardBodyOutline{
+   margin: 10px;
+
+   padding: 10px;
+   border-radius: 25px;
+   box-shadow: 2px 1px rgba(102, 51, 153, 0.329);
+
+}
+.cardBodyOutline:hover{
+   box-shadow: 5px 5px rgba(102, 51, 153, 0.678);
+}
+.monsterImage{
+    width: 100%;
+
+}
+.flex_column{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.bodyStructure{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 50px;
+}
+
+.image{
+    width: 400px;
+    height: fit-content;
+    border-radius: 10px;
+   box-shadow: 5px 5px rgba(23, 3, 43, 0.144);
+}
+.FurriesInformationList{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+    margin: 0px 50px;
+}
+
+.headingInfo{
+    font-size: 32px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+.bodyInfo{
+    font-size: 18px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 100;
+    margin-bottom: 10px;
+    line-height: 30px;
+}
+.buttonToMint{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 10px;
+    
+}
+.marginRow{
+    margin-top: 10px;
+}
+.additionalInfo{
+    border: 1px solid grey;
+    padding: 20px 5px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.additionalInfo p{
+    padding:10px
+}

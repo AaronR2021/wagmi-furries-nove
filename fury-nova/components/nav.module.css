@@ -1,0 +1,44 @@
+.Hero{
+    max-width: 1362px;
+    width: 100%;
+    max-height: 851.25px;
+}
+.flex_spacebetween{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+}
+.nav_buttons_list{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.button_nav{
+width: 88px;
+height: 28px;
+margin-right: 5px;
+margin-left: 5px;
+
+}
+.button_nav_box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+    width: 80%;
+}
+.shadow_bar{
+    width: 40px;
+
+}
+.button_nav:hover >  .shadow_bar{
+    border-bottom: 1px solid white;
+    margin-left: 15px;
+    font-weight: 900;
+}
+.button_nav:hover >  .button_nav_box{
+    font-weight: 900;
+    font-size: 18px;
+}

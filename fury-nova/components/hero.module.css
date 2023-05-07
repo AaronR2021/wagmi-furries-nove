@@ -1,0 +1,54 @@
+.hero_banner{
+    width: 100%;
+    height: 851px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.text_hero{
+   max-width: 530px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+.text_hero h3{
+font-family: 'Caudex';
+font-style: normal;
+font-weight: 700;
+font-size: 45.4px;
+line-height: 118%;
+/* or 54px */
+letter-spacing: 0.005em;
+
+text-align:center;
+text-justify: inter-word;
+
+margin-right: 30px;
+
+color: #FFFFFF;
+}
+.button_view_NFTs:hover{
+background: radial-gradient(98.26% 251.56% at 13.33% 18.61%, #515b5a 1%, #000000 99%);
+}
+.button_view_NFTs{
+font-size: 40px;
+margin-top: 20px;
+width: fit-content;
+display: flex;
+justify-content: space-between;
+flex-direction: row;
+padding: 10px;
+
+border-radius: 10px;
+border: 1px solid rgb(145, 142, 142);
+background: radial-gradient(98.26% 251.56% at 13.33% 18.61%, #323131 10%, #000000 90%);
+}
+.nftCard{
+    max-width: 300px;
+    width: 100%;
+    margin-right: 30px;
+}
+
