@@ -42,7 +42,7 @@ function CharacterDetail() {
     args:[furyInfo.id],
     overrides: {
       from: address,
-      value: ethers.utils.parseEther('0.000013'),
+      value: ethers.utils.parseEther(constPerMint),
     },
   })
 
