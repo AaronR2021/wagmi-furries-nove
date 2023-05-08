@@ -38,7 +38,7 @@ function CharacterDetail() {
   //write to contract
   const mintNovaFurries = useContractWrite({
     mode: "recklesslyUnprepared",
-    address: "0x72aB91aaf2530CD3060E44F687fAa3cF74CDe032",
+    address: process.env.NEXT_PUBLIC_ADDRESS,
     abi: abi,
     functionName: "mint",
     args: [furyInfo.id],
@@ -64,7 +64,7 @@ function CharacterDetail() {
   useEffect(() => {
     const provider = getProvider();
     const contract = getContract({
-      address: "0x72aB91aaf2530CD3060E44F687fAa3cF74CDe032",
+      address: process.env.NEXT_PUBLIC_ADDRESS,
       abi: abi,
       signerOrProvider: provider,
     });

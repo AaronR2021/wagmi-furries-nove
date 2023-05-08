@@ -1,208 +1,91 @@
 import styles from "./form.module.css";
 import React, { useState } from "react";
-import Box from "@mui/material/Box";
+import { useRouter } from "next/router";
 import TextField from "@mui/material/TextField";
-import { obj } from "../utils/utils";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import Stack from "@mui/material/Stack";
-import axios from "axios";
+import {abi} from "../abi";
+const { BigNumber,ethers } = require('ethers');
+
+
+import { useAccount, useContractWrite } from "wagmi";
+
 
 function form() {
-  const [ipfs, setipfs] = useState(obj);
-  const [step, setStep] = useState(0);
-  const apiKey = process.env.NEXT_PUBLIC_PINATA_API_KEY;
-  const apiSecret = process.env.NEXT_PUBLIC_PINATA_API_KEY;
+  const router = useRouter();
 
-  //functions
-  function setObject(e) {
-    const key = e.target.name;
-    const value = e.target.value;
-    if (key in ipfs) {
-      ipfs[key] = value;
+
+  const [totalSupply, setTotalSupply] = useState(null);//30
+  const [uri, setURI] = useState(null);//QmSkzf8TVo4wmCFnaSXGhFfzKt9hRpFUymeK2WLmDkqwWV
+  const [costOfNft, setConstOfNft] = useState(null);//13000000000000
+  
+
+
+  const addFurries = useContractWrite({
+    mode: "recklesslyUnprepared",
+    address: process.env.NEXT_PUBLIC_ADDRESS,
+    abi: abi,
+    functionName: "addNewFurry",
+    args: [uri,costOfNft,totalSupply],
+  });
+
+  async function AddFurry(){
+
+    const data = await addFurries.writeAsync(); //write to contract
+    const value = await data.wait()
+   
+    const { status } = await data.wait(); //wait for conformation
+    if (status == 1) {
+      router.replace("/");
+    } else {
+      console.error("Something went wrong") 
     }
-    if (key === "name") {
-      ipfs.name = value;
-    } else if (key === "description") {
-      ipfs.description = value;
-    } else if (key === "height") {
-      ipfs.attributes[0].value = value;
-    } else if (key === "color") {
-      ipfs.attributes[1].value = value;
-    } else if (key === "features") {
-      ipfs.attributes[2].value = value;
-    } else if (key === "habitat") {
-      ipfs.attributes[3].value = value;
-    } else if (key === "diet") {
-      ipfs.attributes[4].value = value;
-    } else if (key === "swimming") {
-      ipfs.attributes[5].value = value;
-    } else if (key === "flying") {
-      ipfs.attributes[6].value = value;
-    } else if (key === "surface") {
-      ipfs.attributes[7].value = value;
-    } else if (key === "attack_power") {
-      ipfs.attributes[8].value = value;
-    } else if (key === "defense_power") {
-      ipfs.attributes[9].value = value;
+    
+  }
+
+  function setObject(event){
+    const name = event.target.name;
+    const value = event.target.value;
+    
+    if(name=='URI'){
+      const val='ipfs://'+value+'/';
+      setURI(val)
     }
-  }
-  function returnData() {
-    console.log(ipfs);
-  }
-  async function imageUpload(event) {
-    setStep(1)
+    if(name=='costOfNft'){
+      setConstOfNft(value)}
+    if(name=='MaxSupply'){setTotalSupply(value)}
   }
 
-  if (step == 0) {
-    return (
-      <div className={styles.formCenter}>
-        <h4 className={styles.uploadImageText}>
-          Upload Image of spotten Furry
-        </h4>
 
 
-        <Stack direction="row" alignItems="center" spacing={2}>
-          <Button variant="contained" component="label">
-            Upload
-            <input hidden accept="image/*" type="file" />
-          </Button>
-          <IconButton
-            color="primary"
-            aria-label="upload picture"
-            component="label"
-          >
-            <input accept="image/*" type="file"  onChange={imageUpload}/>
-          </IconButton>
-        </Stack>
-
-
-      </div>
-    );
-  } else {
-    return (
-      <div className={styles.formCenter}>
-        <Box
-          component="form"
-          noValidate
-          autoComplete="off"
-          className={styles.form}
-        >
-          {console.log(ipfs, ">>>IPFS")}
-
+  return <div className={styles.formCenter}>
+            <TextField
+            sx={{ width: "36ch" }}
+            id="margin-dense"
+            margin="dense"
+            placeholder="URI"
+            onChange={setObject}
+            name="URI"
+          />
+          
           <TextField
             sx={{ width: "36ch" }}
             id="margin-dense"
             margin="dense"
-            placeholder="Please enter Furry nova's name"
+            placeholder="const of NFT in wei"
             onChange={setObject}
-            name="name"
+            name="costOfNft"
           />
-
           <TextField
             sx={{ width: "36ch" }}
             id="margin-dense"
             margin="dense"
-            placeholder="Please enter Furry nova's Description"
+            placeholder="Max supply of NFT"
             onChange={setObject}
-            name="description"
+            name="MaxSupply"
           />
-
-          <TextField
-            sx={{ width: "36ch" }}
-            id="margin-dense"
-            margin="dense"
-            placeholder="Height in Ft."
-            onChange={setObject}
-            name="height"
-          />
-
-          <TextField
-            sx={{ width: "36ch" }}
-            id="margin-dense"
-            margin="dense"
-            placeholder="Colour"
-            onChange={setObject}
-            name="color"
-          />
-
-          <TextField
-            sx={{ width: "36ch" }}
-            id="margin-dense"
-            margin="dense"
-            placeholder="Features"
-            onChange={setObject}
-            name="features"
-          />
-
-          <TextField
-            sx={{ width: "36ch" }}
-            id="margin-dense"
-            margin="dense"
-            placeholder="Habitat"
-            onChange={setObject}
-            name="habitat"
-          />
-
-          <TextField
-            sx={{ width: "36ch" }}
-            id="margin-dense"
-            margin="dense"
-            placeholder="Diet"
-            onChange={setObject}
-            name="diet"
-          />
-
-          <TextField
-            sx={{ width: "36ch" }}
-            id="margin-dense"
-            margin="dense"
-            placeholder="Swimming (true/false)"
-            onChange={setObject}
-            name="swimming"
-          />
-
-          <TextField
-            sx={{ width: "36ch" }}
-            id="margin-dense"
-            margin="dense"
-            placeholder="Flying (true/false)"
-            onChange={setObject}
-            name="flying"
-          />
-
-          <TextField
-            sx={{ width: "36ch" }}
-            id="margin-dense"
-            margin="dense"
-            placeholder="Surface (true/false)"
-            onChange={setObject}
-            name="surface"
-          />
-
-          <TextField
-            sx={{ width: "36ch" }}
-            id="margin-dense"
-            margin="dense"
-            placeholder="Attack_power"
-            onChange={setObject}
-            name="attack_power"
-          />
-
-          <TextField
-            sx={{ width: "36ch" }}
-            id="margin-dense"
-            margin="dense"
-            placeholder="Defense_power"
-            onChange={setObject}
-            name="defense_power"
-          />
-        </Box>
-
-        <button onClick={returnData}>Click</button>
-      </div>
-    );
-  }
+          <div className={styles.button}></div>
+          <Button variant="contained" size="large" onClick={AddFurry}>Add Furry</Button>
+  </div>
 }
 
 export default form;

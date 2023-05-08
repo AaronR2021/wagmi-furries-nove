@@ -30,7 +30,7 @@ export default function index() {
   useEffect(() => {
     const provider = getProvider();
     const contract = getContract({
-      address: "0x72aB91aaf2530CD3060E44F687fAa3cF74CDe032",
+      address: process.env.NEXT_PUBLIC_ADDRESS,
       abi: abi,
       signerOrProvider: provider,
     });
