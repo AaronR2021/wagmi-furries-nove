@@ -1,7 +1,19 @@
 import React from 'react'
 import styles from './nav.module.css'
+import { useRouter } from 'next/router'
+import { useAccount, useContractWrite } from "wagmi";
+import {isAdmin} from '../utils/utils'
 
 function NAV() {
+  const router = useRouter();
+  const { address, isConnected } = useAccount();
+
+
+  function admin(){
+    isAdmin(address,router);
+  }
+
+  
   return (
     <div className={styles.Hero}>
       <nav className={styles.flex_spacebetween}>
@@ -20,8 +32,8 @@ function NAV() {
 
           </li>
 
-          <li className={styles.button_nav}>
-            <div className={styles.button_nav_box}>About us</div>
+          <li className={styles.button_nav} onClick={admin}>
+            <div className={styles.button_nav_box}>Admin</div>
             <div className={styles.shadow_bar}></div>
 
           </li>

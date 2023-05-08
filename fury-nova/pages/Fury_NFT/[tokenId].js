@@ -12,6 +12,7 @@ const { ethers } = require("ethers");
 import Snackbar from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
+import NAV from "../../components/nav"
 //to write on contract
 
 import {
@@ -115,6 +116,7 @@ function CharacterDetail() {
     return (
       <div className={styles.flex_column}>
         <div className="container">
+        <NAV/>
           <div className={styles.bodyStructure}>
             <img src={furyInfo.image} className={styles.image} />
           </div>

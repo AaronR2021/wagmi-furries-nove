@@ -5,6 +5,55 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import axios, { Axios } from "axios";
 
+export let obj = {
+  "name":"",
+  "description":"",
+  "image":"https://ipfs.io/ipfs/",
+  "attributes":[
+      {
+          "trait_type":"height",
+          "value":""
+      },
+      {
+          "trait_type":"color",
+          "value":""
+      },
+      {
+          "trait_type":"features",
+          "value":""
+      },
+      {
+          "trait_type":"habitat",
+          "value":""
+      },
+      {
+          "trait_type":"diet",
+          "value":""
+      },
+      {
+          "trait_type":"swimming",
+          "value":""
+      },
+      {
+          "trait_type":"flying",
+          "value":""
+      },
+      {
+          "trait_type":"surface",
+          "value":""
+      },
+      {
+          "trait_type":"attack_power",
+          "value":""
+      },
+      {
+          "trait_type":"defense_power",
+          "value":""
+      }
+  ]
+
+}
+
 export function authenticate(connected, router) {
   if (connected) {
     router.replace("/home");
@@ -56,3 +105,12 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:last-child td, &:last-child th': {
   },
 }));
+
+
+export function isAdmin(address,router){
+  if(address=='0x15DC364d4b7881E980B41d1720D996ce13529Ece'){
+    router.replace('/admin')
+  }else{
+    router.replace('/')
+  }
+}
