@@ -15,7 +15,6 @@ function reroute(){
         pathname:`/Fury_NFT/${data.name}`,
         query:{data:JSON.stringify(data)}
     })
-    console.dir(route)
 }
   return (
 <CCard style={{ width: '18rem',background:'rgba(255, 255, 255, 0.178)' }} className={styles.cardBodyOutline}>
